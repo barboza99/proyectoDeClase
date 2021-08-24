@@ -1,24 +1,79 @@
 package org.una.inventario.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.UsuarioDTO;
+import org.una.inventario.entities.Usuario;
 import org.una.inventario.services.IUsuarioService;
-
 import java.util.List;
 import java.util.Optional;
+import org.una.inventario.SwaggerConfiguration;
 
 @RestController
 @RequestMapping("/usuarios")
+@Api(tags = {"Usuarios"})
+
 public class UsuarioController {
 
     @Autowired
     private IUsuarioService usuarioService;
 
+    @ResponseBody
+    @ApiOperation(value = "Inicio de sesión para conseguir token de acceso",
+     response = UsuarioDTO.class, tags = "Seguridad")
+    public ResponseEntity<?> login(@PathVariable(value = "cedula")String cedula, @PathVariable(value = "password") String password){
+        try{
+            UsuarioDTO usuario = new UsuarioDTO();
+            Optional<UsuarioDTO> usuarioFound = usuarioService.login(cedula, password);
+            if(usuarioFound.isPresent()){
+                return new ResponseEntity<>(usuarioFound, HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /*@PutMapping("/login")
+    @ResponseBody
+    public ResponseEntity<?> login(@PathVariable(value = "cedula") String cedula, @PathVariable(value = "password") String password) {
+        try {
+            UsuarioDTO usuario = new UsuarioDTO();
+            Optional<UsuarioDTO> usuarioFound = usuarioService.login(cedula, password);
+            if (usuarioFound.isPresent()) {
+                return new ResponseEntity<>(usuarioFound, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
 
     @GetMapping()
+    @ApiOperation(value = "Obtiene una lista de todos los Usuarios", response = UsuarioDTO.class,
+    responseContainer = "List", tags = "Usuarios")
+    public  @ResponseBody
+    ResponseEntity<?> findAll(){
+        try {
+            Optional<List<UsuarioDTO>> result = usuarioService.findAll();
+            if(result.isPresent()){
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /*@GetMapping()
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -31,7 +86,7 @@ public class UsuarioController {
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
@@ -46,23 +101,6 @@ public class UsuarioController {
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    @PutMapping("/login")
-    @ResponseBody
-    public ResponseEntity<?> login(@PathVariable(value = "cedula") String cedula, @PathVariable(value = "password") String password) {
-        try {
-            UsuarioDTO usuario = new UsuarioDTO();
-            Optional<UsuarioDTO> usuarioFound = usuarioService.login(cedula, password);
-            if (usuarioFound.isPresent()) {
-                return new ResponseEntity<>(usuarioFound, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
     }
 
     @GetMapping("/cedula/{term}")
@@ -112,10 +150,8 @@ public class UsuarioController {
             Optional<UsuarioDTO> usuarioUpdated = usuarioService.update(usuarioModified, id);
             if (usuarioUpdated.isPresent()) {
                 return new ResponseEntity<>(usuarioUpdated, HttpStatus.OK);
-
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
             }
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -135,10 +171,15 @@ public class UsuarioController {
 
     @DeleteMapping("/")
     public ResponseEntity<?> deleteAll() throws Exception {
-        //TODO: Implementar este método
-        //throw new Exception("Not implemented Function");
-
-        return null;
+        try {
+            usuarioService.deleteAll();
+            return new ResponseEntity<>("Ok" , HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
+
+
 }
 
