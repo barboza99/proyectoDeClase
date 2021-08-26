@@ -99,5 +99,15 @@ public class UsuarioServiceImplementation implements IUsuarioService {
         return Optional.ofNullable(usuarioDTOList);
     }
 
+
+    @Transactional(readOnly = true)
+    public Optional<List<UsuarioDTO>> findByDepartamentoId(Long id) {
+        List<Usuario> usuarioList = usuarioRepository.findByDepartamentoId(id);
+        if (usuarioList.isEmpty()) throw new NotFoundInformationException();
+
+        List<UsuarioDTO> usuarioDTOList = MapperUtils.DtoListFromEntityList(usuarioList, UsuarioDTO.class);
+        return Optional.ofNullable(usuarioDTOList);
+    }
+
 }
 

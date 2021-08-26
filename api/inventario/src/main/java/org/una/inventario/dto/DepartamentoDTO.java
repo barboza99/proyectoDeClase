@@ -11,16 +11,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UsuarioDTO  {
+public class DepartamentoDTO {
 
     private Long id;
-    private String nombreCompleto;
-    private String cedula;
+    private String nombre;
     private boolean estado;
-    private Date fechaRegistro;
+    private  Date fechaCreacion;
     private Date fechaModificacion;
-    private Long departamentoId;
-    private boolean esJefe;
-
 }
-
