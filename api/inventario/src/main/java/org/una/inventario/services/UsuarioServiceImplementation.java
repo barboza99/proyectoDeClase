@@ -65,6 +65,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     @Transactional(readOnly = true)
     public Optional<UsuarioDTO> login(String cedula, String password) {
         Usuario usuario = usuarioRepository.findByCedulaAndPasswordEncriptado(cedula, password);
+
         return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
 
     }
@@ -77,8 +78,8 @@ public class UsuarioServiceImplementation implements IUsuarioService {
 
         UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTO);
-
     }
+
 
     @Override
     @Transactional(readOnly = true)
