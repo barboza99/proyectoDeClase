@@ -14,7 +14,7 @@ public class InformationNotSavedException extends RuntimeException{
 
     private final HttpStatus errorCode= HttpStatus.NOT_EXTENDED;
 
-    private final  String errorMessage= "Información de la petición no guardada";
+    private final  String errorMessage= "Error al guardar la información";
 
 
 }

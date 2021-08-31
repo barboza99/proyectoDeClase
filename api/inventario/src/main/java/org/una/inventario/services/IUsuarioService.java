@@ -1,8 +1,6 @@
 package org.una.inventario.services;
 
 import org.una.inventario.dto.UsuarioDTO;
-import org.una.inventario.entities.Usuario;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +12,8 @@ public interface IUsuarioService {
     public Optional<List<UsuarioDTO>> findByCedulaAproximate(String cedula);
 
     public Optional<List<UsuarioDTO>> findByNombreCompletoAproximateIgnoreCase(String nombreCompleto);
+
+    public Optional<List<UsuarioDTO>> findByDepartamentoId(Long id);
 
     public Optional<UsuarioDTO> create(UsuarioDTO usuarioDTO);
 

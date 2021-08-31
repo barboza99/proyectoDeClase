@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.UsuarioDTO;
 import org.una.inventario.services.IUsuarioService;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -31,20 +32,26 @@ public class UsuarioController {
 
     @ApiOperation(value = "Obtiene una lista de todos los Usuarios", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     @GetMapping()
-    public @ResponseBody
-    ResponseEntity<?> findAll() {
+    public @ResponseBody ResponseEntity<?> findAll() {
         Optional<List<UsuarioDTO>> result = usuarioService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
-    @ApiOperation(value = "Obtiene una usuario a partir de su id", response = UsuarioDTO.class, tags = "Usuarios")
+    @ApiOperation(value = "Obtiene un usuario a partir de su id", response = UsuarioDTO.class, tags = "Usuarios")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         Optional<UsuarioDTO> usuarioFound = usuarioService.findById(id);
         return new ResponseEntity<>(usuarioFound, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Obtiene una lista de usuarios a partir del id de departamento", response = UsuarioDTO.class
+    , responseContainer = "List", tags = "Usuarios")
+    @GetMapping("/departamento/{id}")
+    public ResponseEntity<?> findByDepartamentoId(@PathVariable(value = "id") Long id) {
+        Optional<List<UsuarioDTO>> listUsuariosFound = usuarioService.findByDepartamentoId(id);
+        return new ResponseEntity<>(listUsuariosFound, HttpStatus.OK);
+    }
 
     @GetMapping("/cedula/{term}")
     @ApiOperation(value = "Obtiene una lista de Usuarios aproximados a un numero de cedula",
@@ -61,6 +68,7 @@ public class UsuarioController {
             Optional<List<UsuarioDTO>> result = usuarioService.findByNombreCompletoAproximateIgnoreCase(term);
             return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/")
