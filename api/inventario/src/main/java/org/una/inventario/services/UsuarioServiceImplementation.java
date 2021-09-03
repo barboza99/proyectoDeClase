@@ -24,7 +24,6 @@ public class UsuarioServiceImplementation implements IUsuarioService {
         List<Usuario> usuarioList = usuarioRepository.findByNombreCompletoContainingIgnoreCase(nombreCompleto);
         List<UsuarioDTO> usuarioDTOList = MapperUtils.DtoListFromEntityList(usuarioList, UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTOList);
-
     }
 
     private UsuarioDTO getSavedUsuarioDTO(UsuarioDTO usuarioDTO) {
@@ -39,14 +38,11 @@ public class UsuarioServiceImplementation implements IUsuarioService {
         return Optional.ofNullable(getSavedUsuarioDTO(usuarioDTO));
     }
 
-
     @Override
     @Transactional
     public Optional<UsuarioDTO> update(UsuarioDTO usuarioDTO, Long id) {
         if (usuarioRepository.findById(id).isEmpty()) throw new NotFoundInformationException();
-
         return Optional.ofNullable(getSavedUsuarioDTO(usuarioDTO));
-
     }
 
     @Override
@@ -65,9 +61,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     @Transactional(readOnly = true)
     public Optional<UsuarioDTO> login(String cedula, String password) {
         Usuario usuario = usuarioRepository.findByCedulaAndPasswordEncriptado(cedula, password);
-
         return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
-
     }
 
     @Override
@@ -75,16 +69,27 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     public Optional<UsuarioDTO> findById(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isEmpty()) throw new NotFoundInformationException();
-
         UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<UsuarioDTO> findJefeByDepartamento(Long id) {
+        Usuario usuario = usuarioRepository.findJefeByDepartamento(id);
+        return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario , UsuarioDTO.class));
+    }
+
+    @Override
+    public Optional<UsuarioDTO> findNombreCompletoWithLikeSQL(String nombreCompleto) {
+        Usuario usuario = usuarioRepository.findNombreCompletoWithLikeSQL(nombreCompleto);
+        return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
     }
 
 
     @Override
     @Transactional(readOnly = true)
     public Optional<List<UsuarioDTO>> findAll() {
-
         List<UsuarioDTO> usuarioDTOList = MapperUtils.DtoListFromEntityList(usuarioRepository.findAll(), UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTOList);
     }
@@ -94,17 +99,14 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     public Optional<List<UsuarioDTO>> findByCedulaAproximate(String cedula) {
         List<Usuario> usuarioList = usuarioRepository.findByCedulaContaining(cedula);
         if (usuarioList.isEmpty()) throw new NotFoundInformationException();
-
         List<UsuarioDTO> usuarioDTOList = MapperUtils.DtoListFromEntityList(usuarioList, UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTOList);
     }
-
 
     @Transactional(readOnly = true)
     public Optional<List<UsuarioDTO>> findByDepartamentoId(Long id) {
         List<Usuario> usuarioList = usuarioRepository.findByDepartamentoId(id);
         if (usuarioList.isEmpty()) throw new NotFoundInformationException();
-
         List<UsuarioDTO> usuarioDTOList = MapperUtils.DtoListFromEntityList(usuarioList, UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTOList);
     }

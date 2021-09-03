@@ -61,14 +61,29 @@ public class UsuarioController {
             return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/nombreAproximado/{term}")
+    @ApiOperation(value = "Obtiene un usuario aproximados al nombre completo", response = UsuarioDTO.class, tags = "Usuarios")
+    @ResponseBody
+    public ResponseEntity<?> findByNombreWitlLikeSql(@PathVariable(value = "term")String term){
+        Optional<UsuarioDTO> usuarioDTO = usuarioService.findNombreCompletoWithLikeSQL(term);
+        return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+    }
+    @GetMapping("/id/{term}")
+    @ApiOperation(value = "Obtiene el jefe de un departamento",response = UsuarioDTO.class, tags = "Usuarios")
+    @ResponseBody
+    public ResponseEntity<?> findJefeByDepartamento(@PathVariable(value = "term")Long term){
+        Optional<UsuarioDTO> usuarioDTO = usuarioService.findJefeByDepartamento(term);
+        return  new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+    }
+
     @GetMapping("/nombre/{term}")
     @ApiOperation(value = "Obtiene una lista de Usuarios aproximados al nombre completo", response = UsuarioDTO.class,
     responseContainer = "List", tags = "Usuarios")
+    @ResponseBody
     public ResponseEntity<?> findByNombreCompletoAproximateIgnoreCase(@PathVariable(value = "term") String term) {
             Optional<List<UsuarioDTO>> result = usuarioService.findByNombreCompletoAproximateIgnoreCase(term);
             return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/")
@@ -77,28 +92,26 @@ public class UsuarioController {
     public ResponseEntity<?> create(@RequestBody UsuarioDTO usuarioDTO) {
             Optional<UsuarioDTO> usuarioCreated = usuarioService.create(usuarioDTO);
             return new ResponseEntity<>(usuarioCreated, HttpStatus.CREATED);
-
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     @ResponseBody
     @ApiOperation(value = "Postea un usuario con el id", response = UsuarioDTO.class, tags = "Usuarios")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody UsuarioDTO usuarioModified) {
-
             Optional<UsuarioDTO> usuarioUpdated = usuarioService.update(usuarioModified, id);
             return new ResponseEntity<>(usuarioUpdated, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     @ApiOperation(value = "Elimina un usuario mediante el id", response = UsuarioDTO.class, tags = "Usuarios")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) throws Exception {
             usuarioService.delete(id);
             return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping()
     @ApiOperation(value = "Elimina todos los usuarios", response = UsuarioDTO.class, tags = "Usuarios")
-    public ResponseEntity<?> deleteAll() throws Exception {
+    public ResponseEntity<?> deleteAll() throws Exception  {
             usuarioService.deleteAll();
             return new ResponseEntity<>("Ok" , HttpStatus.OK);
     }

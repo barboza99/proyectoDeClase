@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.DepartamentoDTO;
+import org.una.inventario.dto.UsuarioDTO;
 import org.una.inventario.services.IDepartamentoService;
 
 import java.util.List;
@@ -28,5 +29,21 @@ public class DepartamentoController {
         Optional<List<DepartamentoDTO>> departamentoFound = departamentoService.findByEstado(estado);
         return new ResponseEntity<>(departamentoFound, HttpStatus.OK);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Postea un departamento", response = DepartamentoDTO.class, tags = "Departamentos")
+    @PostMapping("/")
+        public ResponseEntity<?> create(@RequestBody DepartamentoDTO departamentoDTO){
+        Optional<DepartamentoDTO> departamentoCreated= departamentoService.create(departamentoDTO);
+        return new ResponseEntity<>(departamentoCreated, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Obtiene una lista de todos los Departamentos", response = DepartamentoDTO.class, responseContainer = "List", tags = "Departamentos")
+    @GetMapping()
+    public @ResponseBody ResponseEntity<?> findAll() {
+        Optional<List<DepartamentoDTO>> result = departamentoService.findAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
 }

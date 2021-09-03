@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioService {
+
     public Optional<List<UsuarioDTO>> findAll();
 
     public Optional<UsuarioDTO> findById(Long id);
+
+    public Optional<UsuarioDTO> findJefeByDepartamento(Long id);
+
+    public  Optional<UsuarioDTO> findNombreCompletoWithLikeSQL(String nombreCompleto);
 
     public Optional<List<UsuarioDTO>> findByCedulaAproximate(String cedula);
 
