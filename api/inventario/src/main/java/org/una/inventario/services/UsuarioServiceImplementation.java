@@ -76,11 +76,14 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     @Override
     @Transactional(readOnly = true)
     public Optional<UsuarioDTO> findJefeByDepartamento(Long id) {
-        Usuario usuario = usuarioRepository.findJefeByDepartamento(id);
-        return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario , UsuarioDTO.class));
+        Optional<Usuario> usuario = usuarioRepository.findJefeByDepartamento(id);
+        if(usuario.isEmpty()) throw new NotFoundInformationException();
+        UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
+        return Optional.ofNullable(usuarioDTO);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<UsuarioDTO> findNombreCompletoWithLikeSQL(String nombreCompleto) {
         Usuario usuario = usuarioRepository.findNombreCompletoWithLikeSQL(nombreCompleto);
         return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));

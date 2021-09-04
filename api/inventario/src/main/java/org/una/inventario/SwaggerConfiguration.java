@@ -29,7 +29,8 @@ public class SwaggerConfiguration {
                         new Tag("Usuarios", "Entidad de Usuarios"),
                         new Tag("Departamentos", "Entidad de Departamentos"),
                         new Tag("Transacciones", "Entidad de transacciones"),
-                        new Tag("Roles", "Entidad de roles")
+                        new Tag("Roles", "Entidad de roles"),
+                        new Tag("DataInitializer", "Data Initializer")
                 );
 
     }
