@@ -17,18 +17,18 @@ import java.util.Optional;
 @Api(tags = {"Usuarios"})
 
 public class UsuarioController {
-
+    
     @Autowired
     private IUsuarioService usuarioService;
 
     @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDTO.class, tags = "Seguridad")
-    @PutMapping("/login")
+    @PutMapping("/login/{cedula}/{password}")
     @ResponseBody
     public ResponseEntity<?> login(@PathVariable(value = "cedula") String cedula, @PathVariable(value = "password") String password) {
+        System.out.println(cedula + "   " +  password);
         Optional<UsuarioDTO> usuarioFound = usuarioService.login(cedula, password);
         return new ResponseEntity<>(usuarioFound, HttpStatus.OK);
     }
-
 
     @ApiOperation(value = "Obtiene una lista de todos los Usuarios", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     @GetMapping()

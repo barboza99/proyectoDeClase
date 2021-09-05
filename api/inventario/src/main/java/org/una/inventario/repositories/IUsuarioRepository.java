@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    public Usuario findByCedulaAndPasswordEncriptado(String cedula, String passwordEncriptado);
+    public Optional<Usuario> findByCedulaAndPasswordEncriptado(String cedula, String passwordEncriptado);
 
     public List<Usuario> findByCedulaContaining(String cedula);
 

@@ -58,10 +58,12 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<UsuarioDTO> login(String cedula, String password) {
-        Usuario usuario = usuarioRepository.findByCedulaAndPasswordEncriptado(cedula, password);
-        return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
+        Optional<Usuario> usuario = usuarioRepository.findByCedulaAndPasswordEncriptado(cedula, password);
+        if(usuario.isEmpty()) throw new NotFoundInformationException();
+        UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class);
+        return Optional.ofNullable(usuarioDTO);
     }
 
     @Override

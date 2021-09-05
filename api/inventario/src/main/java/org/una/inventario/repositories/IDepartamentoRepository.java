@@ -11,4 +11,6 @@ public interface IDepartamentoRepository extends JpaRepository<Departamento, Lon
 
     public List<Departamento> findByEstado(boolean estado);
 
+    
+
 }
