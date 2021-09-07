@@ -1,7 +1,6 @@
 package org.una.inventario.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.una.inventario.dto.AuthenticationRequest;
 import org.una.inventario.dto.UsuarioDTO;
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +29,7 @@ public interface IUsuarioService {
 
     public void deleteAll();
 
-    public Optional<UsuarioDTO> login(String cedula,String password);
-
-
+    public String login(AuthenticationRequest authenticationRequest);
 
 
 }

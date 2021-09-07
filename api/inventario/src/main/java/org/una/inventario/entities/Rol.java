@@ -30,7 +30,7 @@ public class Rol implements Serializable {
     @Setter(AccessLevel.NONE)
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
     private List<Usuario> usuarios= new ArrayList<>();
 

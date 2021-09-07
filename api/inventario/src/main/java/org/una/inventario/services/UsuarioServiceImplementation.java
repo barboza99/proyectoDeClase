@@ -1,8 +1,12 @@
 package org.una.inventario.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,10 +14,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.una.inventario.dto.AuthenticationRequest;
 import org.una.inventario.dto.UsuarioDTO;
 import org.una.inventario.entities.Usuario;
 import org.una.inventario.exceptions.NotFoundInformationException;
 import org.una.inventario.exceptions.PassWordIsBlankException;
+import org.una.inventario.jwt.JwtProvider;
 import org.una.inventario.repositories.IUsuarioRepository;
 import org.una.inventario.utils.MapperUtils;
 
@@ -67,14 +73,21 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         usuarioRepository.deleteAll();
     }
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
     @Override
     @Transactional
-    public Optional<UsuarioDTO> login(String cedula, String password) {
-        Optional<Usuario> usuario = usuarioRepository.findByCedulaAndPasswordEncriptado(cedula, password);
-        if(usuario.isEmpty()) throw new NotFoundInformationException();
-        UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class);
-        return Optional.ofNullable(usuarioDTO);
+    public String login(AuthenticationRequest authenticationRequest) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtProvider.generateToken(authenticationRequest);
     }
+
 
     @Override
     @Transactional(readOnly = true)
