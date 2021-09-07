@@ -1,13 +1,11 @@
 package org.una.inventario.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Date;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

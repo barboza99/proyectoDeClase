@@ -105,8 +105,6 @@
 			<version> 5.5.1</version>
 			<type>jar</type>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>

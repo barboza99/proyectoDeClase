@@ -1,12 +1,11 @@
 package org.una.inventario.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.una.inventario.entities.Departamento;
 
 import java.util.Date;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,12 +14,13 @@ public class UsuarioDTO  {
 
     private Long id;
     private String nombreCompleto;
+    private String passwordEncriptado;
     private String cedula;
     private boolean estado;
     private Date fechaRegistro;
     private Date fechaModificacion;
-    private Long departamentoId;
+    private DepartamentoDTO departamento;
     private boolean esJefe;
-
+    private RolDTO rol;
 }
 
