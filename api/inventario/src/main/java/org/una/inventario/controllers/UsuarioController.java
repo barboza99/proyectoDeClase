@@ -5,13 +5,16 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.AuthenticationRequest;
 import org.una.inventario.dto.AuthenticationResponse;
 import org.una.inventario.dto.RolDTO;
 import org.una.inventario.dto.UsuarioDTO;
+import org.una.inventario.exceptions.MissingInputsException;
 import org.una.inventario.services.IUsuarioService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,26 +27,13 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
 
-    //@ModelAttribute
-    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDTO.class, tags = "Seguridad")
-    @PutMapping("/login/{cedula}/{password}")
+    @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> login(@PathVariable( value = "cedula") String cedula, @PathVariable(value = "password") String password,
-    @ModelAttribute(value = "authentication") AuthenticationRequest authentication) {
-        //if (bindingResult.hasErrors()) { throw new MissingInputsException();  }
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-        String token = usuarioService.login(authentication);
-        if (!token.isBlank()) {
-            authenticationResponse.setUsuarioDTO(new UsuarioDTO());
-            authenticationResponse.setJwt(token);
-            authenticationResponse.setRolDTO(new RolDTO());
-            //TODO: Complete this   authenticationResponse.setUsuario(usuario);
-            //TODO: Complete this    authenticationResponse.setPermisos(permisosOtorgados);
-            return new ResponseEntity(authenticationResponse, HttpStatus.OK);
-        } else {
-           // throw new InvalidCredentialsException();
-            return null;
-        }
+    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = AuthenticationResponse.class, tags = "Seguridad")
+    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult result) {
+        if (result.hasErrors()) { throw new MissingInputsException();}
+        AuthenticationResponse authenticationResponse = usuarioService.login(authenticationRequest);
+        return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Obtiene una lista de todos los Usuarios", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")

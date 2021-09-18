@@ -15,8 +15,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.inventario.dto.AuthenticationRequest;
+import org.una.inventario.dto.AuthenticationResponse;
+import org.una.inventario.dto.RolDTO;
 import org.una.inventario.dto.UsuarioDTO;
+import org.una.inventario.entities.Rol;
 import org.una.inventario.entities.Usuario;
+import org.una.inventario.exceptions.InvalidCredentialsException;
 import org.una.inventario.exceptions.NotFoundInformationException;
 import org.una.inventario.exceptions.PassWordIsBlankException;
 import org.una.inventario.jwt.JwtProvider;
@@ -81,11 +85,27 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
 
     @Override
     @Transactional
-    public String login(AuthenticationRequest authenticationRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtProvider.generateToken(authenticationRequest);
+    public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
+            Authentication authentication = authenticationManager
+            .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+            String token = jwtProvider.generateToken(authenticationRequest);
+            Optional<Usuario> usuario = usuarioRepository.findByCedula(authenticationRequest.getCedula());
+            if(!usuario.isPresent()){ throw new InvalidCredentialsException(); }
+            System.out.println(usuario.get().getCedula());
+            UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
+            Rol rol = usuario.get().getRol();
+            RolDTO rolDTO =  MapperUtils.DtoFromEntity(rol, RolDTO.class);
+            if(!token.isBlank()){
+                authenticationResponse.setJwt(token);
+                authenticationResponse.setUsuarioDTO(usuarioDTO);
+                authenticationResponse.setRolDTO(rolDTO);
+                return  authenticationResponse;
+            }else{
+                throw new InvalidCredentialsException();
+            }
+
     }
 
 
@@ -126,7 +146,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     @Transactional(readOnly = true)
     public Optional<List<UsuarioDTO>> findByCedulaAproximate(String cedula) {
         List<Usuario> usuarioList = usuarioRepository.findByCedulaContaining(cedula);
-        //if (usuarioList.isEmpty()) throw new NotFoundInformationException();
+        if(usuarioList.isEmpty()) return Optional.empty();
         List<UsuarioDTO> usuarioDTOList = MapperUtils.DtoListFromEntityList(usuarioList, UsuarioDTO.class);
         return Optional.ofNullable(usuarioDTOList);
     }

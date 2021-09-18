@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.una.inventario.dto.AuthenticationRequest;
+import org.una.inventario.dto.AuthenticationResponse;
 
 import java.util.Date;
 

@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 @Data
 @ToString
 @Component
-public class InformationNotSavedException extends RuntimeException{
+public class InvalidCredentialsException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private final HttpStatus errorCode= HttpStatus.UNAUTHORIZED;
+    private final HttpStatus errorCode= HttpStatus.NOT_EXTENDED;
 
-    private final  String errorMessage= "Error al guardar la información";
-
-
+    private final  String errorMessage = "Sin autorizacion";
 }
