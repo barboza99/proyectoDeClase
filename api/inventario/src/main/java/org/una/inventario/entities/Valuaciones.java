@@ -5,34 +5,35 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Builder
-@Table(name = "roles")
+@Table(name = "valuaciones")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Rol implements Serializable {
+public class Valuaciones implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", length = 50)
-    private String nombre;
+    @ManyToOne
+    @JoinColumn(name = "activos_id")
+    private Activo activos;
+
+    @ManyToOne
+    @JoinColumn(name = "inventarios_id")
+    private Inventarios inventarios;
+
+    @Column(name = "precio_valuacion")
+    private double precioValuacion;
 
     @Column(name = "fecha_creacion")
     @Setter(AccessLevel.NONE)
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-
-    @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
-    private List<Usuario> usuarios= new ArrayList<>();
 
 }

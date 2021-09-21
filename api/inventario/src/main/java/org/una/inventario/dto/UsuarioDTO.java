@@ -1,7 +1,6 @@
 package org.una.inventario.dto;
 
 import lombok.*;
-import org.una.inventario.entities.Departamento;
 
 import java.util.Date;
 

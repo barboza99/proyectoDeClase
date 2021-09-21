@@ -48,8 +48,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Inventario de Activos",
-                "Rest API sobre Inventario de Activos.",
+                "Inventario de Activo",
+                "Rest API sobre Inventario de Activo.",
                 "Versión:1.2.0",
                 "https://una.ac.cr/api/inventario",
                 new Contact("UNA Sede Región Brunca", "https://srb.una.ac.cr/index.php/es/", "decanatosrb@una.cr"),

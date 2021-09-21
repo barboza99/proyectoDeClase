@@ -42,6 +42,9 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Transaccion> transacciones= new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<ActivosAsignados> activosAsignados = new ArrayList<>();
+
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.DATE)
     @Setter(AccessLevel.NONE)

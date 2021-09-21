@@ -1,38 +1,32 @@
 package org.una.inventario.entities;
 
-
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Builder
-@Table(name = "roles")
+@Table(name = "categorias")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Rol implements Serializable {
-
+public class Categorias implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", length = 50)
+    @Column(name = "nombre_categoria")
     private String nombre;
 
-    @Column(name = "fecha_creacion")
-    @Setter(AccessLevel.NONE)
-    @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
+    @Column
+    private boolean estado;
 
-    @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
-    private List<Usuario> usuarios= new ArrayList<>();
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.DATE)
+    @Setter(AccessLevel.NONE)
+    private Date fechaCreacion;
 
 }
