@@ -165,13 +165,13 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (usuarioBuscado.isPresent()) {
             Usuario usuario = usuarioBuscado.get();
             List<GrantedAuthority> roles = new ArrayList<>();
-            roles.add(new SimpleGrantedAuthority("ADMIN"));
-            UserDetails userDetails = new User(usuario.getCedula(), usuario.getPasswordEncriptado(), roles);
-            return userDetails;
+            roles.add(new SimpleGrantedAuthority(usuario.getRol().getNombre()));
+            return new User(usuario.getCedula(), usuario.getPasswordEncriptado(), roles);
         } else {
             throw new UsernameNotFoundException("Username not found, check your request");
         }
     }
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private String encriptarPassword(String password) {

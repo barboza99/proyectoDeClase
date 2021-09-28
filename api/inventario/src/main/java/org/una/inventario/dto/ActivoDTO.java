@@ -1,9 +1,6 @@
 package org.una.inventario.dto;
 
 import lombok.*;
-import org.una.inventario.entities.Categorias;
-import org.una.inventario.entities.Marcas;
-import org.una.inventario.entities.Proveedores;
 
 import java.util.Date;
 

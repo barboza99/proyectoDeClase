@@ -17,5 +17,4 @@ public class PassWordIsBlankException extends RuntimeException{
 
     private final  String errorMessage= "Esta petición no debe llevar contraseña en blanco";
 
-
 }

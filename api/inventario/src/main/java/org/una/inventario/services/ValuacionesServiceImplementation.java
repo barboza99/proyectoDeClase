@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.inventario.dto.ValuacionesDTO;
-import org.una.inventario.entities.Valuaciones;
+import org.una.inventario.entities.Valuacion;
 import org.una.inventario.exceptions.NotFoundInformationException;
 import org.una.inventario.repositories.IValuacionesRepository;
 import org.una.inventario.utils.MapperUtils;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IValuacionesServiceImplementation implements IValuacionesService{
+public class ValuacionesServiceImplementation implements IValuacionesService{
 
     @Autowired
     IValuacionesRepository valuacionesRepository;
@@ -22,7 +22,7 @@ public class IValuacionesServiceImplementation implements IValuacionesService{
     @Override
     @Transactional(readOnly = true)
     public Optional<List<ValuacionesDTO>> findByActivosId(Long id) {
-        List<Valuaciones> valuaciones = valuacionesRepository.findByActivosId(id);
+        List<Valuacion> valuaciones = valuacionesRepository.findByActivosId(id);
         if(valuaciones.isEmpty()) throw new NotFoundInformationException();
         List<ValuacionesDTO> valuacionesDTO = MapperUtils.DtoListFromEntityList(valuaciones, ValuacionesDTO.class);
         return Optional.ofNullable(valuacionesDTO);
@@ -31,7 +31,7 @@ public class IValuacionesServiceImplementation implements IValuacionesService{
     @Override
     @Transactional(readOnly = true)
     public Optional<List<ValuacionesDTO>> findByInventariosId(Long id) {
-        List<Valuaciones> valuaciones = valuacionesRepository.findByInventariosId(id);
+        List<Valuacion> valuaciones = valuacionesRepository.findByInventarioId(id);
         if(valuaciones.isEmpty()) throw new NotFoundInformationException();
         List<ValuacionesDTO> valuacionesDTO = MapperUtils.DtoListFromEntityList(valuaciones, ValuacionesDTO.class);
         return Optional.ofNullable(valuacionesDTO);

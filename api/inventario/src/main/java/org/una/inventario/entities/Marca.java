@@ -1,39 +1,37 @@
 package org.una.inventario.entities;
 
-
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "valuaciones")
+@Table(name = "marcas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Valuaciones implements Serializable {
+public class Marca implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "activos_id")
-    private Activo activos;
+    @Column(name = "nombre_marca", length = 100)
+    private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "inventarios_id")
-    private Inventarios inventarios;
-
-    @Column(name = "precio_valuacion")
-    private double precioValuacion;
+    @Column
+    private boolean estado;
 
     @Column(name = "fecha_creacion")
     @Setter(AccessLevel.NONE)
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marca")
+    private List<Activos> activos = new ArrayList<>();
 }

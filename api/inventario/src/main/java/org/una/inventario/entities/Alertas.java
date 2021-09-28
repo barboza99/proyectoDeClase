@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 
-
 public class Alertas implements Serializable {
 
     @Id
@@ -22,7 +21,7 @@ public class Alertas implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "activos_id")
-    private Activo activos;
+    private Activos activos;
 
     @Column(name = "tipo", length = 50)
     private String tipo;

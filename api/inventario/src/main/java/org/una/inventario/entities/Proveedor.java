@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 
-public class Proveedores implements Serializable {
+public class Proveedor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,6 @@ public class Proveedores implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedores")
-    private List<Activo> activos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private List<Activos> activos = new ArrayList<>();
 }

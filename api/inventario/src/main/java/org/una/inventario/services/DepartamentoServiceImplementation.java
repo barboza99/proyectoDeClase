@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IDepartamentoServiceImplementation  implements  IDepartamentoService{
+public class DepartamentoServiceImplementation implements  IDepartamentoService{
 
     @Autowired
     private IDepartamentoRepository departamentoRepository;

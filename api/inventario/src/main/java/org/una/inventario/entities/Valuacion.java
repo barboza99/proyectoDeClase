@@ -1,5 +1,6 @@
 package org.una.inventario.entities;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,26 +8,32 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "categorias")
+@Table(name = "valuaciones")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
-public class Categorias implements Serializable {
+public class Valuacion implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre_categoria")
-    private String nombre;
+    @ManyToOne
+    @JoinColumn(name = "activos_id")
+    private Activos activos;
 
-    @Column
-    private boolean estado;
+    @ManyToOne
+    @JoinColumn(name = "inventarios_id")
+    private Inventario inventario;
+
+    @Column(name = "precio_valuacion")
+    private double precioValuacion;
 
     @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.DATE)
     @Setter(AccessLevel.NONE)
+    @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
 
 }

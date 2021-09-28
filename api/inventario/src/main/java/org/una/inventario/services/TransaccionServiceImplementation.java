@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ITransaccionServiceImplementation implements ITransaccionService{
+public class TransaccionServiceImplementation implements ITransaccionService{
 
     @Autowired
     private ITransaccionRepository transaccionRepository;

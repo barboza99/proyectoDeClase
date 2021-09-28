@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IRolServiceImplementation implements IRolService{
+public class RolServiceImplementation implements IRolService{
 
     @Autowired
     private IRolRepository rolRepository;

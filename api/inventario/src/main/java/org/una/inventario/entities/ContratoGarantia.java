@@ -12,14 +12,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ContratosGarantias implements Serializable {
+public class ContratoGarantia implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "activos_id")
-    private Activo activos;
+    private Activos activos;
 
     @Column(name = "monto_asegurado")
     private double montoAsegurado;

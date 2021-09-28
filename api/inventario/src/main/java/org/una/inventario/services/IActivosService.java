@@ -1,7 +1,6 @@
 package org.una.inventario.services;
 
 import org.una.inventario.dto.ActivoDTO;
-import org.una.inventario.entities.Activo;
 
 import java.util.List;
 import java.util.Optional;

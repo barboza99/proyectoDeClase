@@ -40,7 +40,10 @@ public class SwaggerConfiguration {
                 .build()
                 .apiInfo(apiInfo())
                 .tags(new Tag("Seguridad", "Metodos de Seguridad"),
-                        new Tag("Usuarios", "Entidad de Usuarios")
+                        new Tag("Usuarios", "Entidad de Usuarios"),
+                        new Tag("Departamentos", "Entidad de Departamentos"),
+                        new Tag("Roles", "Entidad de Roles"),
+                        new Tag("Transacciones", "Entidad de Transacciones")
                 );
     }
 
@@ -48,8 +51,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Inventario de Activo",
-                "Rest API sobre Inventario de Activo.",
+                "Inventario de Activos",
+                "Rest API sobre Inventario de Activos.",
                 "Versión:1.2.0",
                 "https://una.ac.cr/api/inventario",
                 new Contact("UNA Sede Región Brunca", "https://srb.una.ac.cr/index.php/es/", "decanatosrb@una.cr"),

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.inventario.dto.ContratosGarantiaDTO;
-import org.una.inventario.entities.ContratosGarantias;
+import org.una.inventario.entities.ContratoGarantia;
 import org.una.inventario.entities.Transaccion;
 import org.una.inventario.exceptions.NotFoundInformationException;
 import org.una.inventario.repositories.IContratosGarantiasRepository;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @Service
-public class IContratosGarantiasServiceImplementation implements IContratosGarantiasService{
+public class ContratosGarantiasServiceImplementation implements IContratosGarantiasService{
 
     @Autowired
     IContratosGarantiasRepository contratosGarantiasRepository;
@@ -24,7 +24,7 @@ public class IContratosGarantiasServiceImplementation implements IContratosGaran
     @Override
     @Transactional(readOnly = true)
     public Optional<ContratosGarantiaDTO> findById(Long id) {
-        Optional<ContratosGarantias> contratoGarantia = contratosGarantiasRepository.findById(id);
+        Optional<ContratoGarantia> contratoGarantia = contratosGarantiasRepository.findById(id);
         if(contratoGarantia.isEmpty()) throw new NotFoundInformationException();
         ContratosGarantiaDTO contratosGarantiaDTO = MapperUtils.DtoFromEntity(contratoGarantia, ContratosGarantiaDTO.class);
         return Optional.ofNullable(contratosGarantiaDTO);

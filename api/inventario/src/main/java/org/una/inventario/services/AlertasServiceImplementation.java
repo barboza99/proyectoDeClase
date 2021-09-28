@@ -12,7 +12,7 @@ import org.una.inventario.utils.MapperUtils;
 import java.util.Optional;
 
 @Service
-public class IAlertasServiceImplementation implements IAlertasService{
+public class AlertasServiceImplementation implements IAlertasService{
 
     @Autowired
     IAlertasRepository alertasRepository;

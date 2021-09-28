@@ -35,6 +35,6 @@ public class ActivosAsignados implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "activos_id")
-    private Activo activos;
+    private Activos activos;
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 
-public class Activo implements Serializable {
+public class Activos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,31 +31,31 @@ public class Activo implements Serializable {
     private boolean estado;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activos")
-    private List<Activo> activos = new ArrayList<>();
+    private List<Activos> activos = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activos")
     private List<Alertas> alertas = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activos")
-    private List<ContratosGarantias> contratosGarantias = new ArrayList<>();
+    private List<ContratoGarantia> contratosGarantias = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activos")
     private List<ActivosAsignados> activosAsignados = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activos")
-    private List<Valuaciones> valuaciones = new ArrayList<>();
+    private List<Valuacion> valuaciones = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "categorias_id")
-    private Categorias categorias;
+    private Categoria categoria;
 
     @ManyToOne
     @JoinColumn(name = "marcas_id")
-    private Marcas marcas;
+    private Marca marca;
 
     @ManyToOne
     @JoinColumn(name = "proveedores_id")
-    private Proveedores proveedores;
+    private Proveedor proveedor;
 
     @Column(name = "fecha_creacion")
     @Setter(AccessLevel.NONE)

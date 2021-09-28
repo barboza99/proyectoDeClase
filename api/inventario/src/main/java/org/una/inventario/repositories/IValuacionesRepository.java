@@ -2,15 +2,14 @@ package org.una.inventario.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.una.inventario.entities.Valuaciones;
+import org.una.inventario.entities.Valuacion;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface IValuacionesRepository extends JpaRepository<Valuaciones, Long> {
+public interface IValuacionesRepository extends JpaRepository<Valuacion, Long> {
 
-    public List<Valuaciones> findByActivosId(Long id);
+    public List<Valuacion> findByActivosId(Long id);
 
-    public List<Valuaciones> findByInventariosId(Long id);
+    public List<Valuacion> findByInventarioId(Long id);
 }
