@@ -39,12 +39,12 @@ public class DataLoader implements ApplicationRunner {
             Optional<DepartamentoDTO> cajasDepartamento = departamentoService.create(DepartamentoDTO.builder().nombre("Cajas").build());
             Optional<DepartamentoDTO> informaticaDepartamento = departamentoService.create(DepartamentoDTO.builder().nombre("Informatica").build());
 
-            Optional<RolDTO> colaboradorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.COLABORADOR.name()).build());
+            Optional<RolDTO> colaboradorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.ROLE_COLABORADOR.name()).build());
             //Optional<RolDTO> colaboradorRol = rolService.create(RolDTO.builder().nombre("Colaborador").build());
-            Optional<RolDTO> auditorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.AUDITOR.name()).build());
-            Optional<RolDTO> contadorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.CONTADOR.name()).build());
-            Optional<RolDTO> usuarioRol = rolService.create(RolDTO.builder().nombre(RolesTypes.USUARIO.name()).build());
-            Optional<RolDTO> administradorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.ADMINISTRADOR.name()).build());
+            Optional<RolDTO> auditorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.ROLE_AUDITOR.name()).build());
+            Optional<RolDTO> contadorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.ROLE_CONTADOR.name()).build());
+            Optional<RolDTO> usuarioRol = rolService.create(RolDTO.builder().nombre(RolesTypes.ROLE_USUARIO.name()).build());
+            Optional<RolDTO> administradorRol = rolService.create(RolDTO.builder().nombre(RolesTypes.ROLE_ADMINISTRADOR.name()).build());
 
 
             UsuarioDTO cajeroUsuario = UsuarioDTO.builder()

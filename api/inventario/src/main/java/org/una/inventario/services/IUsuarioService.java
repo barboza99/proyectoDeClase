@@ -1,7 +1,5 @@
 package org.una.inventario.services;
 
-import org.una.inventario.dto.AuthenticationRequest;
-import org.una.inventario.dto.AuthenticationResponse;
 import org.una.inventario.dto.UsuarioDTO;
 import java.util.List;
 import java.util.Optional;

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.TransaccionDTO;
 import org.una.inventario.dto.UsuarioDTO;
@@ -23,6 +24,8 @@ public class TransaccionController {
     @Autowired
     private ITransaccionService transaccionService;
 
+
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/")
     @ApiOperation(value = "Postea una transaccion", response = TransaccionDTO.class, tags = "Transacciones")
@@ -32,6 +35,7 @@ public class TransaccionController {
         return new ResponseEntity<>(transaccionCreated, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value =  "Obtiene una transaccion a partir de un id",
     response = TransaccionDTO.class, tags = "Transacciones")
     @GetMapping("/{id}")
@@ -40,6 +44,7 @@ public class TransaccionController {
         return new ResponseEntity<>(transaccionFound, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene una lista de transacciones a partir del id del usuario y un rango de fecha",
     response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     @GetMapping("/usuario/{id}/fechaDeCreacion/{startDate}/{endDate}")
@@ -49,6 +54,7 @@ public class TransaccionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene una lista de transaccioones a partir de un rango de la fecha de creacion", response = TransaccionDTO.class
             ,responseContainer = "List" ,  tags = "Transacciones")
     @GetMapping("/fechaDeCreacion/{dateStart}/{dateEnded}")
@@ -67,7 +73,7 @@ public class TransaccionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }*/
 
-
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene una lista de transacciones a partir del id del objeto y un rango de fechas"
     , response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     @GetMapping("/{objetoId} /{startDate} /{endDate}")

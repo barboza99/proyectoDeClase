@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.RolDTO;
 import org.una.inventario.services.IRolService;
@@ -23,6 +24,7 @@ public class RolController {
     @Autowired
     private IRolService rolService;
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene un rol a partir de ud id", response = RolDTO.class, tags = "Roles")
     @GetMapping("/{id}")
     ResponseEntity <?> findById(@PathVariable(value = "id")Long id){
@@ -30,6 +32,7 @@ public class RolController {
         return new ResponseEntity<>(rolFound, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene una lista de todos los roles", response =  RolDTO.class, responseContainer = "List", tags = "Roles")
     @GetMapping()
     ResponseEntity<?> findAll(){
@@ -37,6 +40,7 @@ public class RolController {
         return new ResponseEntity<>(rolDTOList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/")
     @ApiOperation(value = "Postea un rol", response = RolDTO.class, tags = "Roles")
@@ -46,6 +50,7 @@ public class RolController {
         return new ResponseEntity<>(rolCreated, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Postea un rol a partir de su id", response = RolDTO.class, tags = "Roles")
     @PutMapping("/{id}")
     @ResponseBody
@@ -54,6 +59,7 @@ public class RolController {
         return new ResponseEntity<>(rolUpdate, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene un rol a partir de un rango de la fecha de creacion", response = RolDTO.class
     ,responseContainer = "List" ,  tags = "Roles")
     @GetMapping("/fechas/{dateStart}/{dateEnded}")
@@ -62,7 +68,7 @@ public class RolController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Elimina un rol por su id", response = RolDTO.class, tags = "Roles")
     public ResponseEntity<?> deleteById(@PathVariable(value = "id")Long id) throws Exception{
@@ -70,6 +76,7 @@ public class RolController {
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @DeleteMapping()
     @ApiOperation(value = "Elimina todos los roles", response = RolDTO.class, tags = "Roles")
     public ResponseEntity<?> deleteAll() throws Exception{

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.una.inventario.dto.DepartamentoDTO;
 import org.una.inventario.dto.UsuarioDTO;
@@ -23,6 +24,7 @@ public class DepartamentoController {
     @Autowired
     private IDepartamentoService departamentoService;
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene una lista de los departamentos según estado",  response = DepartamentoDTO.class, responseContainer = "List", tags = "Departamentos")
     @GetMapping("/findByEstado/{estado}")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado")boolean estado){
@@ -30,6 +32,7 @@ public class DepartamentoController {
         return new ResponseEntity<>(departamentoFound, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Postea un departamento", response = DepartamentoDTO.class, tags = "Departamentos")
     @PostMapping("/")
@@ -38,6 +41,7 @@ public class DepartamentoController {
         return new ResponseEntity<>(departamentoCreated, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR') or hasRole('AUDITOR')")
     @ApiOperation(value = "Obtiene una lista de todos los Departamentos", response = DepartamentoDTO.class, responseContainer = "List", tags = "Departamentos")
     @GetMapping()
     public @ResponseBody ResponseEntity<?> findAll() {
