@@ -84,23 +84,25 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     private JwtProvider jwtProvider;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
-            Authentication authentication = authenticationManager
-            .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+
+
+
             String token = jwtProvider.generateToken(authenticationRequest);
             Optional<Usuario> usuario = usuarioRepository.findByCedula(authenticationRequest.getCedula());
-            if(!usuario.isPresent()){ throw new InvalidCredentialsException(); }
-            System.out.println(usuario.get().getCedula());
-            UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
-            Rol rol = usuario.get().getRol();
-            RolDTO rolDTO =  MapperUtils.DtoFromEntity(rol, RolDTO.class);
-            if(!token.isBlank()){
-                authenticationResponse.setJwt(token);
+
+            if(usuario.isPresent() && bCryptPasswordEncoder.matches(authenticationRequest.getPassword(),
+                    usuario.get().getPasswordEncriptado() )){
+                AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+                Authentication authentication = authenticationManager
+                        .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
+                UsuarioDTO usuarioDTO = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
                 authenticationResponse.setUsuarioDTO(usuarioDTO);
-                authenticationResponse.setRolDTO(rolDTO);
+
+                authenticationResponse.setRolDTO(RolDTO.builder().nombre(usuarioDTO.getRol().getNombre()).build());
                 return  authenticationResponse;
             }else{
                 throw new InvalidCredentialsException();
