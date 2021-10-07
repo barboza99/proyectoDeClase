@@ -77,7 +77,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         usuarioRepository.deleteAll();
     }
 
-    @Autowired
+    /*@Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -86,9 +86,6 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     @Override
     @Transactional(readOnly = true)
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
-
-
-
             String token = jwtProvider.generateToken(authenticationRequest);
             Optional<Usuario> usuario = usuarioRepository.findByCedula(authenticationRequest.getCedula());
 
@@ -107,8 +104,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
             }else{
                 throw new InvalidCredentialsException();
             }
-
-    }
+    }*/
 
 
     @Override

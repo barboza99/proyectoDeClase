@@ -27,14 +27,14 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     @ResponseBody
     @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = AuthenticationResponse.class, tags = "Seguridad")
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult result) {
         if (result.hasErrors()) { throw new MissingInputsException();}
         AuthenticationResponse authenticationResponse = usuarioService.login(authenticationRequest);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
-    }
+    }*/
 
     @ApiOperation(value = "Obtiene una lista de todos los Usuarios", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     @GetMapping()
