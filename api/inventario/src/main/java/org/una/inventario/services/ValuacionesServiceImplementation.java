@@ -36,4 +36,15 @@ public class ValuacionesServiceImplementation implements IValuacionesService{
         List<ValuacionesDTO> valuacionesDTO = MapperUtils.DtoListFromEntityList(valuaciones, ValuacionesDTO.class);
         return Optional.ofNullable(valuacionesDTO);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ValuacionesDTO> findByIdDeInventarios(Long id) {
+        Optional<Valuacion> valuacion = valuacionesRepository.calculateValuesOfActivesForInventory(id);
+        if(!valuacion.isPresent()) throw new NotFoundInformationException();
+        ValuacionesDTO valuacionDTO = MapperUtils.DtoFromEntity(valuacion.get() , ValuacionesDTO.class);
+        return Optional.ofNullable(valuacionDTO);
+
+    }
+
 }

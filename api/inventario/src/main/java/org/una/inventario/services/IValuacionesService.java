@@ -10,4 +10,7 @@ public interface IValuacionesService {
     public Optional<List<ValuacionesDTO>> findByActivosId(Long id);
 
     public Optional<List<ValuacionesDTO>> findByInventariosId(Long id);
+
+    public Optional<ValuacionesDTO> findByIdDeInventarios(Long id);
+
 }

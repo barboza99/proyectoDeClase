@@ -12,7 +12,7 @@ import java.util.Date;
 @ToString
 public class ValuacionesDTO {
     private Long id;
-    private InventariosDTO inventariosDTO;
+    private InventariosDTO inventarioDTO;
     private double precioValuacion;
     private Date fechaCreacion;
     private ActivoDTO activoDTO;

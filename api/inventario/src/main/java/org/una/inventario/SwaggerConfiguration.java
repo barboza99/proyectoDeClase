@@ -43,7 +43,8 @@ public class SwaggerConfiguration {
                         new Tag("Usuarios", "Entidad de Usuarios"),
                         new Tag("Departamentos", "Entidad de Departamentos"),
                         new Tag("Roles", "Entidad de Roles"),
-                        new Tag("Transacciones", "Entidad de Transacciones")
+                        new Tag("Transacciones", "Entidad de Transacciones"),
+                        new Tag("Valuaciones", "Entidad de Valuaciones")
                 );
     }
 
